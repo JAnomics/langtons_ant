@@ -20,18 +20,19 @@ class Ant:
 
 
 GRID_SIZE = 200
-SHOW_SIZE = 200
+SHOW_SIZE = 600
 STEPS = 40_000
 
+scale = SHOW_SIZE // GRID_SIZE
+assert int(scale) == scale, "SHOW_SIZE must be a whole number multiple of GRID_SIZE"
 
 ants = [
     Ant(pos=np.array([GRID_SIZE // 3, GRID_SIZE // 3]), dir=np.array([0, -1])),
     Ant(pos=np.array([int(GRID_SIZE * (2 / 3)), int(GRID_SIZE * (2 / 3))]), dir=np.array([0, 1])),
 ]
-scale = SHOW_SIZE // GRID_SIZE
 frame = np.ones(shape=(GRID_SIZE, GRID_SIZE))
 
-with media.VideoWriter("../../out/video_test.mp4", shape=(SHOW_SIZE, SHOW_SIZE), fps=30) as vid:
+with media.VideoWriter("../../out/basic.mp4", shape=(SHOW_SIZE, SHOW_SIZE), fps=30) as vid:
     for step in range(1, STEPS):
         this_frame = frame.copy()
         for ant in ants:
@@ -41,7 +42,6 @@ with media.VideoWriter("../../out/video_test.mp4", shape=(SHOW_SIZE, SHOW_SIZE),
             this_frame[*ant.pos] = 1 - this_frame[*ant.pos]
             # move
             ant.move(GRID_SIZE)
-        # update
         frame = this_frame
         if step % 100 == 0:
             show_frame = np.kron(frame, np.ones((scale, scale)))
