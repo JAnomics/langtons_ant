@@ -27,8 +27,7 @@ scale = SHOW_SIZE // GRID_SIZE
 assert int(scale) == scale, "SHOW_SIZE must be a whole number multiple of GRID_SIZE"
 
 ants = [
-    Ant(pos=np.array([GRID_SIZE // 3, GRID_SIZE // 3]), dir=np.array([0, -1])),
-    Ant(pos=np.array([int(GRID_SIZE * (2 / 3)), int(GRID_SIZE * (2 / 3))]), dir=np.array([0, 1])),
+    Ant(pos=np.array([GRID_SIZE // 2, GRID_SIZE // 2]), dir=np.array([0, -1])),
 ]
 frame = np.ones(shape=(GRID_SIZE, GRID_SIZE))
 
