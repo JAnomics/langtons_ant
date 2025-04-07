@@ -29,7 +29,7 @@ assert int(scale) == scale, "SHOW_SIZE must be a whole number multiple of GRID_S
 ants = [
     Ant(pos=np.array([GRID_SIZE // 2, GRID_SIZE // 2]), dir=np.array([0, -1])),
 ]
-frame = np.ones(shape=(GRID_SIZE, GRID_SIZE))
+frame = np.zeros(shape=(GRID_SIZE, GRID_SIZE))
 
 with media.VideoWriter("../../out/basic.mp4", shape=(SHOW_SIZE, SHOW_SIZE), fps=30) as vid:
     for step in range(1, STEPS):
@@ -37,10 +37,10 @@ with media.VideoWriter("../../out/basic.mp4", shape=(SHOW_SIZE, SHOW_SIZE), fps=
         for ant in ants:
             # rotate (black clockwise, white anticlockwise)
             ant.rotate(this_frame[*ant.pos] == 0)
-            # flip
-            this_frame[*ant.pos] = 1 - this_frame[*ant.pos]
             # move
             ant.move(GRID_SIZE)
+            # flip
+            this_frame[*ant.pos] = 1 - this_frame[*ant.pos]
         frame = this_frame
         if step % 100 == 0:
             show_frame = np.kron(frame, np.ones((scale, scale)))

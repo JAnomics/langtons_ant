@@ -29,8 +29,8 @@ class Ant:
 
 GRID_SIZE = 400
 SHOW_SIZE = 800
-STEPS = 5_000_000
-RULE_SET = "LLRR" * 20
+STEPS = 1_000_000
+RULE_SET = "LLRRRLRLRLLR"
 
 num_states = len(RULE_SET)
 scale = SHOW_SIZE // GRID_SIZE
@@ -39,7 +39,7 @@ assert int(scale) == scale, "SHOW_SIZE must be a whole number multiple of GRID_S
 ants = [
     Ant(pos=np.array([GRID_SIZE // 2, GRID_SIZE // 2]), dir=np.array([0, -1]), rules=RULE_SET),
 ]
-frame = np.ones(shape=(GRID_SIZE, GRID_SIZE))
+frame = np.zeros(shape=(GRID_SIZE, GRID_SIZE))
 
 with media.VideoWriter("../../out/multi_state.mp4", shape=(SHOW_SIZE, SHOW_SIZE), fps=30) as vid:
     for step in range(1, STEPS):
@@ -47,11 +47,11 @@ with media.VideoWriter("../../out/multi_state.mp4", shape=(SHOW_SIZE, SHOW_SIZE)
         for ant in ants:
             # rotate (black clockwise, white anticlockwise)
             ant.update(frame[*ant.pos])
+            # move
+            ant.move(GRID_SIZE)
             # update state
             this_frame[*ant.pos] += 1
             this_frame[*ant.pos] %= num_states
-            # move
-            ant.move(GRID_SIZE)
         frame = this_frame
         if step % 5000 == 0:
             show_frame = np.kron(frame, np.ones((scale, scale)))
