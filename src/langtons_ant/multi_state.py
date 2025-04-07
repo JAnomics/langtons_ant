@@ -45,7 +45,7 @@ with media.VideoWriter("../../out/multi_state.mp4", shape=(SHOW_SIZE, SHOW_SIZE)
     for step in range(1, STEPS):
         this_frame = frame.copy()
         for ant in ants:
-            # rotate (black clockwise, white anticlockwise)
+            # rotate
             ant.update(frame[*ant.pos])
             # move
             ant.move(GRID_SIZE)
